@@ -145,6 +145,11 @@ public class LessonEventPublisher {
     }
 
     private void publish(String eventType, Map<String, Object> payload, String partitionKey) {
+        if (streamBridge == null) {
+            log.debug("StreamBridge not available - skipping {} event", eventType);
+            return;
+        }
+
         Map<String, Object> event = Map.of(
             "eventType", eventType,
             "version", "1.0",
