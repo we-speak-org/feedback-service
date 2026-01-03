@@ -1,10 +1,6 @@
 package org.wespeak.lesson.service;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.stream.function.StreamBridge;
-import org.springframework.messaging.Message;
-import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -12,25 +8,15 @@ import java.util.Map;
 import java.util.UUID;
 
 /**
- * Publisher for lesson events to Kafka.
- * Events are only published if StreamBridge is available (Kafka configured).
+ * Publisher for lesson events.
+ * Currently logs events - will be integrated with Kafka when Spring Cloud Stream 
+ * becomes compatible with Spring Boot 4.
  */
 @Slf4j
 @Service
 public class LessonEventPublisher {
 
-    private static final String BINDING = "lessonEvents-out-0";
     private static final String SOURCE = "lesson-service";
-
-    private final StreamBridge streamBridge;
-
-    @Autowired(required = false)
-    public LessonEventPublisher(StreamBridge streamBridge) {
-        this.streamBridge = streamBridge;
-        if (streamBridge == null) {
-            log.warn("StreamBridge not available - Kafka events will not be published");
-        }
-    }
 
     public void publishLessonStarted(
             String userId,
@@ -51,7 +37,7 @@ public class LessonEventPublisher {
             "courseId", courseId != null ? courseId : ""
         );
         
-        publish("lesson.started", payload, userId);
+        logEvent("lesson.started", payload, userId);
         log.info("Published lesson.started event for userId: {}, lessonId: {}", userId, lessonId);
     }
 
@@ -88,7 +74,7 @@ public class LessonEventPublisher {
             Map.entry("isFirstCompletion", isFirstCompletion)
         );
         
-        publish("lesson.completed", payload, userId);
+        logEvent("lesson.completed", payload, userId);
         log.info("Published lesson.completed event for userId: {}, lessonId: {}, score: {}", userId, lessonId, score);
     }
 
@@ -113,7 +99,7 @@ public class LessonEventPublisher {
             "totalXPEarned", totalXPEarned
         );
         
-        publish("unit.completed", payload, userId);
+        logEvent("unit.completed", payload, userId);
         log.info("Published unit.completed event for userId: {}, unitId: {}", userId, unitId);
     }
 
@@ -140,16 +126,11 @@ public class LessonEventPublisher {
             Map.entry("totalXPEarned", totalXPEarned)
         );
         
-        publish("course.completed", payload, userId);
+        logEvent("course.completed", payload, userId);
         log.info("Published course.completed event for userId: {}, courseId: {}", userId, courseId);
     }
 
-    private void publish(String eventType, Map<String, Object> payload, String partitionKey) {
-        if (streamBridge == null) {
-            log.debug("StreamBridge not available - skipping {} event", eventType);
-            return;
-        }
-
+    private void logEvent(String eventType, Map<String, Object> payload, String partitionKey) {
         Map<String, Object> event = Map.of(
             "eventType", eventType,
             "version", "1.0",
@@ -161,18 +142,7 @@ public class LessonEventPublisher {
             )
         );
 
-        try {
-            Message<Map<String, Object>> message = MessageBuilder
-                .withPayload(event)
-                .setHeader("partitionKey", partitionKey)
-                .build();
-
-            boolean sent = streamBridge.send(BINDING, message);
-            if (!sent) {
-                log.warn("Failed to send {} event", eventType);
-            }
-        } catch (Exception e) {
-            log.error("Error publishing {} event: {}", eventType, e.getMessage(), e);
-        }
+        // TODO: Integrate with Kafka when Spring Cloud Stream supports Spring Boot 4
+        log.debug("Event [{}]: {}", eventType, event);
     }
 }
