@@ -10,8 +10,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TranscriptSegment {
-    private Double startTime;
-    private Double endTime;
-    private String text;
-    private Double confidence;
+  private Double startTime;
+  private Double endTime;
+  private String text;
+  private Double confidence;
 }

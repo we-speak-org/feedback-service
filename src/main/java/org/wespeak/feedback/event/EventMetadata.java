@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class EventMetadata {
-    private String correlationId;
-    private String source;
+  private String correlationId;
+  private String source;
 }

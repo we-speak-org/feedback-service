@@ -10,10 +10,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class FeedbackError {
-    private ErrorType type;
-    private String original;
-    private String correction;
-    private String explanation;
-    private ErrorSeverity severity;
-    private Integer segmentIndex;
+  private ErrorType type;
+  private String original;
+  private String correction;
+  private String explanation;
+  private ErrorSeverity severity;
+  private Integer segmentIndex;
 }

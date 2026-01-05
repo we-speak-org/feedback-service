@@ -1,22 +1,21 @@
 package org.wespeak.feedback.event;
 
+import java.time.Instant;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.time.Instant;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class TranscriptCompletedEvent {
-    private String eventType;
-    private String version;
-    private Instant timestamp;
-    private TranscriptCompletedPayload payload;
-    private EventMetadata metadata;
+  private String eventType;
+  private String version;
+  private Instant timestamp;
+  private TranscriptCompletedPayload payload;
+  private EventMetadata metadata;
 }
 
 @Data
@@ -24,11 +23,11 @@ public class TranscriptCompletedEvent {
 @NoArgsConstructor
 @AllArgsConstructor
 class TranscriptCompletedPayload {
-    private String transcriptId;
-    private String sessionId;
-    private String participantId;
-    private String targetLanguageCode;
-    private Integer wordCount;
-    private Integer duration;
-    private Double confidence;
+  private String transcriptId;
+  private String sessionId;
+  private String participantId;
+  private String targetLanguageCode;
+  private Integer wordCount;
+  private Integer duration;
+  private Double confidence;
 }

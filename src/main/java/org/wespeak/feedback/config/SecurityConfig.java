@@ -11,24 +11,21 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-    
-    @Value("${app.security.enabled:false}")
-    private boolean securityEnabled;
-    
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        if (!securityEnabled) {
-            http
-                .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(auth -> auth.anyRequest().permitAll());
-        } else {
-            http
-                .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/actuator/**").permitAll()
-                        .anyRequest().authenticated()
-                );
-        }
-        return http.build();
+
+  @Value("${app.security.enabled:false}")
+  private boolean securityEnabled;
+
+  @Bean
+  public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    if (!securityEnabled) {
+      http.csrf(AbstractHttpConfigurer::disable)
+          .authorizeHttpRequests(auth -> auth.anyRequest().permitAll());
+    } else {
+      http.csrf(AbstractHttpConfigurer::disable)
+          .authorizeHttpRequests(
+              auth ->
+                  auth.requestMatchers("/actuator/**").permitAll().anyRequest().authenticated());
     }
+    return http.build();
+  }
 }

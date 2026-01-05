@@ -10,12 +10,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class RecordingUploadedPayload {
-    private String recordingId;
-    private String sessionId;
-    private String participantId;
-    private String targetLanguageCode;
-    private String audioUrl;
-    private Integer duration;
-    private String format;
-    private Long size;
+  private String recordingId;
+  private String sessionId;
+  private String participantId;
+  private String targetLanguageCode;
+  private String audioUrl;
+  private Integer duration;
+  private String format;
+  private Long size;
 }

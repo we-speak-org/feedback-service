@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CommonError {
-    private ErrorType type;
-    private String pattern;
-    private Integer frequency;
+  private ErrorType type;
+  private String pattern;
+  private Integer frequency;
 }

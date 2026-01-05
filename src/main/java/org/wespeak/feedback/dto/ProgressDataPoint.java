@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProgressDataPoint {
-    private String date;
-    private Integer overallScore;
-    private Integer sessionsCount;
+  private String date;
+  private Integer overallScore;
+  private Integer sessionsCount;
 }
