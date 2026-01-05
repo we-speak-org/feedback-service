@@ -92,6 +92,13 @@ dependencies {
     
     // REST Assured for API Testing
     testImplementation 'io.rest-assured:rest-assured:5.3.2'
+
+    // AWS SDK for Cloudflare R2 (S3 compatible)
+    implementation platform('software.amazon.awssdk:bom:2.25.11')
+    implementation 'software.amazon.awssdk:s3'
+
+    // Dotenv for local development
+    implementation 'io.github.cdimascio:dotenv-java:3.0.0'
 }
 
 // Avro Code Generation (disabled until Kafka integration)

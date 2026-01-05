@@ -34,3 +34,4 @@ Thumbs.db
 
 # Spring Boot DevTools
 .springBeans
+.env

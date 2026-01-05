@@ -18,6 +18,7 @@ public class TranscriptionService {
 
   private final TranscriptRepository transcriptRepository;
   private final AnalysisService analysisService;
+  private final StorageService storageService;
 
   public void processRecording(RecordingUploadedPayload payload) {
     log.info("Processing recording: {}", payload.getRecordingId());
@@ -47,8 +48,13 @@ public class TranscriptionService {
       transcriptRepository.save(transcript);
 
       // STUBBED: In production, this would:
-      // 1. Download audio from S3
-      // 2. Call Whisper API
+      // 1. Download audio from R2
+      try (var audioStream = storageService.downloadFile(audioUrl)) {
+          log.info("Downloaded audio file for transcript: {}", transcript.getId());
+          // 2. Call Whisper API with the audio stream
+          // whisperClient.transcribe(audioStream);
+      }
+      
       // 3. Parse response
 
       // For now, create a mock transcription
