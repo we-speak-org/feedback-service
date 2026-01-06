@@ -50,11 +50,11 @@ public class TranscriptionService {
       // STUBBED: In production, this would:
       // 1. Download audio from R2
       try (var audioStream = storageService.downloadFile(audioUrl)) {
-          log.info("Downloaded audio file for transcript: {}", transcript.getId());
-          // 2. Call Whisper API with the audio stream
-          // whisperClient.transcribe(audioStream);
+        log.info("Downloaded audio file for transcript: {}", transcript.getId());
+        // 2. Call Whisper API with the audio stream
+        // whisperClient.transcribe(audioStream);
       }
-      
+
       // 3. Parse response
 
       // For now, create a mock transcription
